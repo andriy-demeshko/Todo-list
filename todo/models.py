@@ -1,4 +1,6 @@
 from django.db import models
+from django.utils import timezone
+from datetime import datetime
 
 
 class Tag(models.Model):
@@ -13,13 +15,13 @@ class Tag(models.Model):
 
 class Task(models.Model):
     content = models.TextField()
-    creation_date = models.DateTimeField()
-    deadline_date = models.DateTimeField(null=True, blank=True)
-    status = models.BooleanField()
+    created = models.DateTimeField(default=timezone.now)
+    deadline = models.DateTimeField(null=True, blank=True)
+    status = models.BooleanField(default=False)
     tags = models.ManyToManyField(Tag, related_name="tasks")
 
     class Meta:
-        ordering = ["status", "-creation_date"]
+        ordering = ["status", "-created"]
 
     def __str__(self):
-        return f"{self.content} Create: {self.creation_date} Deadline: {self.deadline_date} status: {self.status}"
+        return f"{self.content}, created: {self.created}, deadline: {self.deadline}, status: {self.status}"
