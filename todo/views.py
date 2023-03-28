@@ -19,12 +19,8 @@ class TaskListView(generic.ListView):
 
 def toggle_task_status(request, pk):
     task = Task.objects.get(id=pk)
-    if task.status:
-        task.status = False
-        task.save(update_fields=["status"])
-    else:
-        task.status = True
-        task.save(update_fields=["status"])
+    task.status = not task.status
+    task.save(update_fields=["status"])
     return HttpResponseRedirect(reverse_lazy("todo:task-list"))
 
 
