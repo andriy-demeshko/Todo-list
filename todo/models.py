@@ -23,4 +23,5 @@ class Task(models.Model):
         ordering = ["status", "-created"]
 
     def __str__(self):
-        return f"{self.content}, created: {self.created}, deadline: {self.deadline}, status: {self.status}"
+        return f"{self.content}, created: {self.created}, " \
+               f"deadline: {self.deadline}, status: {self.status}"
