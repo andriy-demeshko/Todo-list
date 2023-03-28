@@ -26,3 +26,20 @@ def toggle_task_status(request, pk):
         task.status = True
         task.save(update_fields=["status"])
     return HttpResponseRedirect(reverse_lazy("todo:task-list"))
+
+
+class TagCreateView(generic.CreateView):
+    model = Tag
+    fields = "__all__"
+    success_url = reverse_lazy("todo:tag-list")
+
+
+class TagUpdateView(generic.UpdateView):
+    model = Tag
+    fields = "__all__"
+    success_url = reverse_lazy("todo:tag-list")
+
+
+class TagDeleteView(generic.DeleteView):
+    model = Tag
+    success_url = reverse_lazy("todo:tag-list")
