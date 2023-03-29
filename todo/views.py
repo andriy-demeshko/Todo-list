@@ -51,8 +51,11 @@ class TaskDeleteView(generic.DeleteView):
     success_url = reverse_lazy("todo:task-list")
 
 
-def toggle_task_status(request, pk):
-    task = Task.objects.get(id=pk)
-    task.status = not task.status
-    task.save(update_fields=["status"])
-    return HttpResponseRedirect(reverse_lazy("todo:task-list"))
+class ToggleTaskStatus(generic.UpdateView):
+    model = Task
+
+    def get(self, request, *args, **kwargs):
+        task = self.get_object()
+        task.status = not task.status
+        task.save(update_fields=["status"])
+        return HttpResponseRedirect(reverse_lazy("todo:task-list"))
