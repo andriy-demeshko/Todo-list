@@ -17,13 +17,6 @@ class TaskListView(generic.ListView):
     paginate_by = 5
 
 
-def toggle_task_status(request, pk):
-    task = Task.objects.get(id=pk)
-    task.status = not task.status
-    task.save(update_fields=["status"])
-    return HttpResponseRedirect(reverse_lazy("todo:task-list"))
-
-
 class TagCreateView(generic.CreateView):
     model = Tag
     fields = "__all__"
@@ -56,3 +49,10 @@ class TaskUpdateView(generic.UpdateView):
 class TaskDeleteView(generic.DeleteView):
     model = Task
     success_url = reverse_lazy("todo:task-list")
+
+
+def toggle_task_status(request, pk):
+    task = Task.objects.get(id=pk)
+    task.status = not task.status
+    task.save(update_fields=["status"])
+    return HttpResponseRedirect(reverse_lazy("todo:task-list"))
