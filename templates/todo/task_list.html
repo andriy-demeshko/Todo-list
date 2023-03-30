@@ -16,14 +16,18 @@
         <p><b>{{ task.content }}</b>
           {% if task.status %}
             <span style="color:green"><b>Done</b></span>
-            <a href="{% url 'todo:toggle-task-status' pk=task.id %}" class="btn btn-secondary link-to-page">
-              Undo
-            </a>
+            <form action="{% url 'todo:toggle-task-status' pk=task.id %}" method="post" novalidate>
+              {% csrf_token %}
+              <input type="submit" value="Undo" class="btn btn-secondary link-to-page">
+            </form>
+
           {% else %}
             <span style="color:red"><b>Not done</b></span>
-            <a href="{% url 'todo:toggle-task-status' pk=task.id %}" class="btn btn-success link-to-page">
-              Complete
-            </a>
+            <form action="{% url 'todo:toggle-task-status' pk=task.id %}" method="post" novalidate>
+              {% csrf_token %}
+              <input type="submit" value="Complete" class="btn btn-success link-to-page">
+            </form>
+
           {% endif %}
 
         <p style="color: grey">Created: {{ task.created }}</p>
