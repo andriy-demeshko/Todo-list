@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}<title>Todo List | Home</title>{% endblock %}
+
+{% block content %}
+  <h1>
+    TODO list
+    <a href="{% url 'todo:task-create' %}" class="btn btn-primary link-to-page">
+      Add task
+    </a>
+  </h1>
+  <br>
+
+  {% if task_list %}
+      {% for task in task_list %}
+        <p><b>{{ task.content }}</b>
+          {% if task.status %}
+            <span style="color:green"><b>Done</b></span>
+            <a href="{% url 'todo:toggle-task-status' pk=task.id %}" class="btn btn-secondary link-to-page">
+              Undo
+            </a>
+          {% else %}
+            <span style="color:red"><b>Not done</b></span>
+            <a href="{% url 'todo:toggle-task-status' pk=task.id %}" class="btn btn-success link-to-page">
+              Complete
+            </a>
+          {% endif %}
+
+        <p style="color: grey">Created: {{ task.created }}</p>
+        <p style="color: grey">Tags:
+          {% for tag in task.tags.all %}
+            {{ tag.name }}
+          {% endfor %}
+
+        <b><a href="{% url 'todo:task-update' pk=task.id %}">
+          Update
+        </a>
+
+        <a href="{% url 'todo:task-delete' pk=task.id %}" style="color: red">
+          Delete
+        </a></b>
+        </p>
+        <hr>
+      {% endfor %}
+
+  {% else %}
+      <p>There are no tasks in the app.</p>
+  {% endif %}
+{% endblock %}
