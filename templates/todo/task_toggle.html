@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>Toggle task status</h1>
+  <form action="{% url 'todo:toggle-task-status' pk=task.id %}" method="post" novalidate>
+    {% csrf_token %}
+
+    <input type="submit" value="Submit" class="btn btn-primary">
+  </form>
+{% endblock %}

@@ -53,8 +53,10 @@ class TaskDeleteView(generic.DeleteView):
 
 class ToggleTaskStatus(generic.UpdateView):
     model = Task
+    fields = ["status"]
+    template_name_suffix = "_toggle"
 
-    def get(self, request, *args, **kwargs):
+    def post(self, request, *args, **kwargs):
         task = self.get_object()
         task.status = not task.status
         task.save(update_fields=["status"])
